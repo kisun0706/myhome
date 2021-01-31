@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/common_layout">
+
+<div layout:fragment="content" class="container">
+    <div class="container px-5 py-5">
+        <form th:action="@{/cart/list}" method="post">
+            <table class="table table-bordered table-responsive-sm">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width:8%" class="text-center">선택</th>
+                    <th scope="col" class="text-center">이미지</th>
+                    <th scope="col" class="text-center">이름</th>
+                    <th scope="col" class="text-center">가격</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="item:${likes}">
+                    <td class="text-center align-middle">
+                        <input type="checkbox" th:value="${item.id}" name="item_id" id="customCheck1">
+                    </td>
+                    <td class="align-middle" th:onclick="itemDetail([[${item.id}]])"><img th:src="${item.imageUrl}" style="width: 50px;"></td>
+                    <td class="text-center align-middle" th:text="${item.name}" th:onclick="itemDetail([[${item.id}]])"></td>
+                    <td class="text-center align-middle" th:onclick="itemDetail([[${item.id}]])">
+                        <span class="lead" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+                        <span class="lead">원</span>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <td colspan="4" class="text-center">
+                    <button class="btn btn-dark" type="submit">장바구니에 추가</button>
+                </td>
+                </tfoot>
+            </table>
+
+            <script>
+                function itemDetail(id){
+                    location.href='[[@{/store/detail}]]?id='+id;
+                }
+            </script>
+        </form>
+    </div>
+</div>
+
+</html>
